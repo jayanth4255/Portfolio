@@ -1,4 +1,6 @@
 // Project data with external placeholder images
+import paynowImg from '../assets/paynow_project.png';
+import cafeImg from '../assets/back.jpg';
 
 export const projects = [
     {
@@ -6,7 +8,7 @@ export const projects = [
         title: "PayNow",
         description: "A futuristic UPI-style payment web application. Features secure transactions, real-time balance updates, and a seamless user experience.",
         tech: ["HTML", "CSS", "JavaScript", "DJango", "SQL", "ORM"],
-        image: "/src/assets/paynow_project.png",
+        image: paynowImg,
         links: {
             demo: "https://paynow-qqdh.onrender.com",
             github: "https://github.com/jayanth4255/PayNow"
@@ -28,7 +30,7 @@ export const projects = [
         title: "CafeDelight",
         description: "A Static web application for showcasing and managing cafe Menu,Events,Contact us,History of the cafe.",
         tech: ["HTML", "CSS", "JavaScript"],
-        image: "/src/assets/back.jpg",
+        image: cafeImg,
         links: {
             demo: "https://jayanth4255.github.io/CafeDelight/",
             github: "https://github.com/jayanth4255/CafeDelight"

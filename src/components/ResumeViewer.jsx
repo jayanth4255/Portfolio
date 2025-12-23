@@ -14,24 +14,10 @@ const ResumeViewer = ({ isOpen, onClose, resumePath }) => {
 
     useEffect(() => {
         if (isOpen) {
-            setIsLoading(true);
-            fetch(resumePath)
-                .then(response => {
-                    // Check if response is ok AND content type is PDF (or at least not HTML)
-                    const contentType = response.headers.get('content-type');
-                    if (response.ok && contentType && !contentType.includes('text/html')) {
-                        setResumeExists(true);
-                    } else {
-                        setResumeExists(false);
-                    }
-                    setIsLoading(false);
-                })
-                .catch(() => {
-                    setResumeExists(false);
-                    setIsLoading(false);
-                });
+            setIsLoading(false);
+            setResumeExists(true);
         }
-    }, [isOpen, resumePath]);
+    }, [isOpen]);
 
     const handleDownload = () => {
         if (!resumeExists) return;

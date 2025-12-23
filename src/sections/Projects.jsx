@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../data/projects';
 import { Github, ExternalLink, LayoutGrid, BookOpen, Layers, ChevronLeft, ChevronRight, AlertTriangle, Copy, Check, X } from 'lucide-react';
-
 const Projects = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [viewMode, setViewMode] = useState('slideshow'); // 'slideshow', 'roller', 'grid'

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Github, Linkedin, FileText } from 'lucide-react';
 import { personalInfo } from '../data/personal';
 import ResumeViewer from './ResumeViewer';
-import resumeFile from '../assets/Resume.pdf';
+const resumeFile = "./resume.pdf";
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);

@@ -1,0 +1,64 @@
+[33mcommit cbc496d76d890247dce3df37149af6d198ff62e3[m
+Author: jayanth4255 <218a1a4255@risekrishnasaiprakasam.edu.in>
+Date:   Sat Dec 6 19:40:16 2025 +0530
+
+    Initial commit: Portfolio website with Certifications and Experience sections
+
+ .gitignore                                       |   24 [32m+[m
+ README.md                                        |  204 [32m+[m
+ eslint.config.js                                 |   29 [32m+[m
+ index.html                                       |   17 [32m+[m
+ package-lock.json                                | 4634 [32m++++++++++++++++++++++[m
+ package.json                                     |   40 [32m+[m
+ postcss.config.js                                |    6 [32m+[m
+ public/RESUME_INSTRUCTIONS.md                    |   15 [32m+[m
+ public/vite.svg                                  |    1 [32m+[m
+ src/App.css                                      |   42 [32m+[m
+ src/App.jsx                                      |   39 [32m+[m
+ src/assets/Infosys springBoard _Git.pdf          |  Bin [31m0[m -> [32m121797[m bytes
+ src/assets/Profile.png                           |  Bin [31m0[m -> [32m1381902[m bytes
+ src/assets/Resume__Jayanth.pdf                   |  Bin [31m0[m -> [32m124784[m bytes
+ src/assets/ServiceNow_Resume (1).pdf             |  Bin [31m0[m -> [32m87796[m bytes
+ src/assets/back.jpg                              |  Bin [31m0[m -> [32m63975[m bytes
+ src/assets/icons/sql-icon.png                    |  Bin [31m0[m -> [32m6209[m bytes
+ src/assets/paynow_project.png                    |  Bin [31m0[m -> [32m494037[m bytes
+ src/assets/profile-hero.png                      |  Bin [31m0[m -> [32m685938[m bytes
+ src/assets/profile2.png                          |  Bin [31m0[m -> [32m2032229[m bytes
+ src/assets/react.svg                             |    1 [32m+[m
+ src/assets/unstop flipkart grid.pdf              |  Bin [31m0[m -> [32m257817[m bytes
+ src/canvas/Hero3D.jsx                            |   40 [32m+[m
+ src/components/Footer.jsx                        |   41 [32m+[m
+ src/components/Navbar.jsx                        |  171 [32m+[m
+ src/components/ResumeViewer.jsx                  |  287 [32m++[m
+ src/components/Section.jsx                       |   14 [32m+[m
+ src/components/WelcomeScreen.jsx                 |  168 [32m+[m
+ src/components/celestial/AIChatbot.jsx           |  160 [32m+[m
+ src/components/celestial/CelestialBackground.jsx |   39 [32m+[m
+ src/components/celestial/FloatingCard.jsx        |   23 [32m+[m
+ src/components/celestial/OrbitRing.jsx           |   21 [32m+[m
+ src/components/celestial/ParallaxSection.jsx     |   20 [32m+[m
+ src/components/celestial/RotatingPlanet.jsx      |   35 [32m+[m
+ src/components/ui/BentoGrid.jsx                  |   46 [32m+[m
+ src/components/ui/MagneticButton.jsx             |   37 [32m+[m
+ src/components/ui/Spotlight.jsx                  |   55 [32m+[m
+ src/data/academics.js                            |   29 [32m+[m
+ src/data/certifications.js                       |   43 [32m+[m
+ src/data/experience.js                           |   15 [32m+[m
+ src/data/personal.js                             |   31 [32m+[m
+ src/data/projects.js                             |   38 [32m+[m
+ src/data/skills.jsx                              |   40 [32m+[m
+ src/index.css                                    |   43 [32m+[m
+ src/lib/utils.js                                 |    6 [32m+[m
+ src/main.jsx                                     |   10 [32m+[m
+ src/sections/About.jsx                           |  242 [32m++[m
+ src/sections/Academics.jsx                       |  104 [32m+[m
+ src/sections/Certifications.jsx                  |  293 [32m++[m
+ src/sections/Contact.jsx                         |  190 [32m+[m
+ src/sections/Experience.jsx                      |   95 [32m+[m
+ src/sections/Hero.jsx                            |  364 [32m++[m
+ src/sections/Home.jsx                            |  127 [32m+[m
+ src/sections/Projects.jsx                        |  484 [32m+++[m
+ src/sections/Skills.jsx                          |   93 [32m+[m
+ tailwind.config.js                               |   55 [32m+[m
+ vite.config.js                                   |    7 [32m+[m
+ 59 files changed, 8528 insertions(+)

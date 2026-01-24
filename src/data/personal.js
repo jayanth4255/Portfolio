@@ -8,8 +8,6 @@ export const personalInfo = {
     social: {
         linkedin: "https://linkedin.com/in/jayanth799",
         github: "https://jayanth4255.github.io/N4si/",
-        leetcode: "https://leetcode.com/jayanth-mothukuri",
-        twitter: "https://twitter.com/jayanth_dev"
     },
 
     quickFacts: [

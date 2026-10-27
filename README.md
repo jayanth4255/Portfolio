@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌌 Cosmic Portfolio - Premium Universe-Themed React Portfolio
 
 A stunning, futuristic, galaxy-themed portfolio website built with React, featuring immersive 3D elements, smooth animations, and breathtaking cosmic aesthetics.
@@ -202,3 +203,6 @@ For any questions or feedback, feel free to reach out:
 ---
 
 **Made with 💜 and cosmic energy**
+=======
+# Portfolio
+>>>>>>> acfb42076a45333a4d35f9f54b5885c90c65883f

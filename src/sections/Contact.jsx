@@ -17,12 +17,14 @@ import {
     AlertCircle
 } from 'lucide-react';
 import { personalInfo } from '../data/personal';
+import { verifyEmail } from '../utils/emailValidator';
 
 const Contact = () => {
     const [copiedEmail, setCopiedEmail] = useState(false);
     const [copiedPhone, setCopiedPhone] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [statusText, setStatusText] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({ name: '', email: '', role: '', message: '' });
 
@@ -39,8 +41,35 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
         setErrorMessage('');
+
+        const trimmedName = formData.name.trim();
+        const trimmedEmail = formData.email.trim();
+        const trimmedMessage = formData.message.trim();
+
+        if (trimmedName.length < 2) {
+            setErrorMessage('Please enter a valid full name.');
+            return;
+        }
+
+        if (trimmedMessage.length < 10) {
+            setErrorMessage('Please enter a meaningful message (at least 10 characters).');
+            return;
+        }
+
+        setIsSubmitting(true);
+        setStatusText('Verifying email address...');
+
+        // 1. Multi-Layer Real-Time Email Validation (RFC syntax + Disposable block + Live DNS MX Check)
+        const emailCheck = await verifyEmail(trimmedEmail);
+        if (!emailCheck.valid) {
+            setErrorMessage(emailCheck.error || 'Please provide a valid, deliverable email address.');
+            setIsSubmitting(false);
+            setStatusText('');
+            return;
+        }
+
+        setStatusText('Dispatching message...');
 
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
@@ -51,12 +80,13 @@ const Contact = () => {
                 },
                 body: JSON.stringify({
                     access_key: "b4e88753-1994-453e-9387-d90636e5fc87",
-                    name: formData.name,
-                    email: formData.email,
-                    role: formData.role || "Not specified",
-                    message: formData.message,
-                    subject: `Portfolio Message from ${formData.name}${formData.role ? ` (${formData.role})` : ''}`,
-                    from_name: `${formData.name} (Portfolio)`
+                    name: trimmedName,
+                    email: trimmedEmail,
+                    role: formData.role.trim() || "Not specified",
+                    message: trimmedMessage,
+                    subject: `Verified Portfolio Inquiry from ${trimmedName}${formData.role ? ` (${formData.role.trim()})` : ''}`,
+                    from_name: `${trimmedName} (Portfolio)`,
+                    botcheck: false
                 })
             });
 
@@ -71,6 +101,7 @@ const Contact = () => {
             setErrorMessage("Network error occurred. Please check your connection or email directly.");
         } finally {
             setIsSubmitting(false);
+            setStatusText('');
         }
     };
 
@@ -285,6 +316,10 @@ const Contact = () => {
                                                 placeholder="alex@company.com"
                                                 className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors disabled:opacity-50"
                                             />
+                                            <p className="text-[10px] text-slate-500 font-mono mt-1 flex items-center gap-1">
+                                                <ShieldCheck size={11} className="text-emerald-500/80 shrink-0" />
+                                                <span>Verified email required. Fake & disposable domains are blocked.</span>
+                                            </p>
                                         </div>
                                     </div>
 
@@ -319,6 +354,9 @@ const Contact = () => {
                                         />
                                     </div>
 
+                                    {/* Web3Forms Anti-Bot Honeypot */}
+                                    <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
@@ -327,7 +365,7 @@ const Contact = () => {
                                         {isSubmitting ? (
                                             <>
                                                 <Loader2 size={14} className="animate-spin" />
-                                                <span>Sending Message...</span>
+                                                <span>{statusText || 'Sending Message...'}</span>
                                             </>
                                         ) : (
                                             <>

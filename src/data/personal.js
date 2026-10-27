@@ -8,14 +8,14 @@ export const personalInfo = {
     phone: "+91-9398764230",
     phoneDisplay: "+91 93987 64230",
     location: "Ongole, Andhra Pradesh, India",
-    
+
     summary: "Computer Science and Engineering graduate (AI & ML) who builds high-performance web applications and backend services with Python, FastAPI, Django, React.js and SQL databases. Proven track record engineering AI-assisted note workflows, e-commerce ordering engines, and UPI-style transactional wallet systems. Hands-on expertise in REST API architecture, Pydantic validation, SQLAlchemy ORM, PostgreSQL schema design, Postman/Pytest automated testing, Docker containerization, and cloud deployment.",
 
     social: {
         linkedin: "https://linkedin.com/in/jayanth-developer/",
         github: "https://github.com/jayanth4255",
-        leetcode: "https://leetcode.com",
-        hackerrank: "https://www.hackerrank.com"
+        leetcode: "https://leetcode.com/u/JayanthMothukuri/",
+        hackerrank: "https://www.hackerrank.com/profile/jayanthmothukur1"
     },
 
     stats: [

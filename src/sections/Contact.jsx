@@ -12,7 +12,9 @@ import {
     Copy, 
     MessageSquare, 
     Clock, 
-    ShieldCheck 
+    ShieldCheck,
+    Loader2,
+    AlertCircle
 } from 'lucide-react';
 import { personalInfo } from '../data/personal';
 
@@ -20,6 +22,8 @@ const Contact = () => {
     const [copiedEmail, setCopiedEmail] = useState(false);
     const [copiedPhone, setCopiedPhone] = useState(false);
     const [formSubmitted, setFormSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({ name: '', email: '', role: '', message: '' });
 
     const handleCopy = (text, type) => {
@@ -33,12 +37,41 @@ const Contact = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setFormSubmitted(true);
-        setTimeout(() => {
-            setFormData({ name: '', email: '', role: '', message: '' });
-        }, 3000);
+        setIsSubmitting(true);
+        setErrorMessage('');
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: JSON.stringify({
+                    access_key: "b4e88753-1994-453e-9387-d90636e5fc87",
+                    name: formData.name,
+                    email: formData.email,
+                    role: formData.role || "Not specified",
+                    message: formData.message,
+                    subject: `Portfolio Message from ${formData.name}${formData.role ? ` (${formData.role})` : ''}`,
+                    from_name: `${formData.name} (Portfolio)`
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setFormSubmitted(true);
+                setFormData({ name: '', email: '', role: '', message: '' });
+            } else {
+                setErrorMessage(data.message || "Failed to send message. Please try again or email directly.");
+            }
+        } catch (err) {
+            setErrorMessage("Network error occurred. Please check your connection or email directly.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleDownloadDirect = () => {
@@ -204,14 +237,24 @@ const Contact = () => {
                                         Thank you for reaching out. I prioritize hiring inquiries and will respond within 24 hours.
                                     </p>
                                     <button
-                                        onClick={() => setFormSubmitted(false)}
-                                        className="mt-2 px-4 py-2 rounded-lg bg-slate-800 text-xs font-semibold text-slate-200 hover:text-white"
+                                        onClick={() => {
+                                            setFormSubmitted(false);
+                                            setErrorMessage('');
+                                        }}
+                                        className="mt-2 px-4 py-2 rounded-lg bg-slate-800 text-xs font-semibold text-slate-200 hover:text-white transition-colors"
                                     >
                                         Send Another Note
                                     </button>
                                 </motion.div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-4">
+                                    {errorMessage && (
+                                        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center gap-3 text-red-400 text-xs">
+                                            <AlertCircle size={16} className="shrink-0" />
+                                            <span>{errorMessage}</span>
+                                        </div>
+                                    )}
+
                                     <div className="grid sm:grid-cols-2 gap-4">
                                         <div>
                                             <label className="block text-xs font-mono text-slate-400 mb-1.5">
@@ -219,11 +262,13 @@ const Contact = () => {
                                             </label>
                                             <input
                                                 type="text"
+                                                name="name"
                                                 required
+                                                disabled={isSubmitting}
                                                 value={formData.name}
                                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                 placeholder="e.g., Alex Johnson"
-                                                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
+                                                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors disabled:opacity-50"
                                             />
                                         </div>
                                         <div>
@@ -232,11 +277,13 @@ const Contact = () => {
                                             </label>
                                             <input
                                                 type="email"
+                                                name="email"
                                                 required
+                                                disabled={isSubmitting}
                                                 value={formData.email}
                                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                 placeholder="alex@company.com"
-                                                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
+                                                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors disabled:opacity-50"
                                             />
                                         </div>
                                     </div>
@@ -247,10 +294,12 @@ const Contact = () => {
                                         </label>
                                         <input
                                             type="text"
+                                            name="role"
+                                            disabled={isSubmitting}
                                             value={formData.role}
                                             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                                             placeholder="e.g., SDE-1 (Python / Backend) at TechCorp"
-                                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
+                                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors disabled:opacity-50"
                                         />
                                     </div>
 
@@ -260,20 +309,32 @@ const Contact = () => {
                                         </label>
                                         <textarea
                                             rows={4}
+                                            name="message"
                                             required
+                                            disabled={isSubmitting}
                                             value={formData.message}
                                             onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                             placeholder="We reviewed your NoteAI Pro and PayNow projects and would like to discuss an engineering role..."
-                                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors resize-none"
+                                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors resize-none disabled:opacity-50"
                                         />
                                     </div>
 
                                     <button
                                         type="submit"
-                                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-lg shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50"
+                                        disabled={isSubmitting}
+                                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:bg-indigo-600/50 disabled:cursor-not-allowed text-white font-semibold text-xs shadow-lg shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50"
                                     >
-                                        <Send size={14} />
-                                        <span>Dispatch Message</span>
+                                        {isSubmitting ? (
+                                            <>
+                                                <Loader2 size={14} className="animate-spin" />
+                                                <span>Sending Message...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Send size={14} />
+                                                <span>Dispatch Message</span>
+                                            </>
+                                        )}
                                     </button>
                                 </form>
                             )}

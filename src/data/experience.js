@@ -3,13 +3,16 @@ export const experience = [
         id: 1,
         role: "Artificial Intelligence Intern",
         company: "Skill Desire",
-        date: "2024",
+        type: "Engineering Internship",
+        period: "2024",
         duration: "4 Months",
-        description: [
-            "Developed and trained machine learning models for predictive analysis.",
-            "Worked on natural language processing (NLP) tasks and data preprocessing.",
-            "Collaborated with the team to integrate AI solutions into existing applications."
+        location: "Remote / Hybrid",
+        highlights: [
+            "Engineered and trained predictive machine learning models in Python using Scikit-learn and TensorFlow for regression and classification tasks.",
+            "Architected data preprocessing pipelines, handling feature extraction, missing value imputation, and tokenization for natural language processing (NLP) datasets.",
+            "Collaborated with cross-functional software teams to integrate trained model endpoints into backend application pipelines for real-time inference.",
+            "Conducted model validation and hyperparameter tuning, documenting precision, recall, and evaluation benchmarks."
         ],
-        tech: ["Python", "TensorFlow", "Pandas", "Scikit-learn"]
+        tech: ["Python", "Machine Learning", "TensorFlow", "Scikit-learn", "Pandas", "NumPy", "Data Preprocessing"]
     }
 ];

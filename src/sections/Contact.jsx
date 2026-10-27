@@ -1,186 +1,284 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Send, Github, Linkedin, Code2 } from 'lucide-react';
+import { 
+    Mail, 
+    Phone, 
+    MapPin, 
+    Send, 
+    Github, 
+    Linkedin, 
+    Download, 
+    Check, 
+    Copy, 
+    MessageSquare, 
+    Clock, 
+    ShieldCheck 
+} from 'lucide-react';
 import { personalInfo } from '../data/personal';
 
 const Contact = () => {
+    const [copiedEmail, setCopiedEmail] = useState(false);
+    const [copiedPhone, setCopiedPhone] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const [formData, setFormData] = useState({ name: '', email: '', role: '', message: '' });
+
+    const handleCopy = (text, type) => {
+        navigator.clipboard.writeText(text);
+        if (type === 'email') {
+            setCopiedEmail(true);
+            setTimeout(() => setCopiedEmail(false), 2000);
+        } else {
+            setCopiedPhone(true);
+            setTimeout(() => setCopiedPhone(false), 2000);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormSubmitted(true);
+        setTimeout(() => {
+            setFormData({ name: '', email: '', role: '', message: '' });
+        }, 3000);
+    };
+
+    const handleDownloadDirect = () => {
+        const link = document.createElement('a');
+        link.href = './resume.pdf';
+        link.download = `Mothukuri_Siva_Naga_Jayantha_Achary_Resume.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
-        <section id="contact" className="py-32 px-6 relative overflow-hidden">
-            {/* Starfield Background */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {Array.from({ length: 50 }).map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white rounded-full"
-                        style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                        }}
-                        animate={{
-                            opacity: [0, 1, 0],
-                            scale: [0, 1, 0],
-                        }}
-                        transition={{
-                            duration: Math.random() * 3 + 2,
-                            repeat: Infinity,
-                            delay: Math.random() * 2,
-                        }}
-                    />
-                ))}
-            </div>
-
-            {/* Floating Cosmic Icons */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {[Mail, Code2, Github].map((Icon, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute text-orbit-glow/10"
-                        style={{
-                            left: `${20 + i * 30}%`,
-                            top: `${30 + i * 20}%`,
-                        }}
-                        animate={{
-                            y: [0, -30, 0],
-                            rotate: [0, 10, -10, 0],
-                            opacity: [0.1, 0.2, 0.1],
-                        }}
-                        transition={{
-                            duration: 5 + i * 2,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                    >
-                        <Icon size={80} />
-                    </motion.div>
-                ))}
-            </div>
-
+        <section id="contact" className="py-24 px-4 sm:px-6 relative bg-[#090D16] border-t border-slate-800/80">
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
-                    {/* Contact Info */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <h2 className="text-5xl md:text-6xl font-display font-bold mb-6 gradient-text">
-                            Let's Create Something Amazing
-                        </h2>
-                        <p className="text-xl text-star-white/70 mb-12 leading-relaxed">
-                            Have a project in mind or just want to say hi? I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
-                        </p>
-
-                        <div className="space-y-8">
-                            <motion.div
-                                whileHover={{ x: 10 }}
-                                className="flex items-center gap-6"
-                            >
-                                <div className="w-14 h-14 glass-morphism rounded-full flex items-center justify-center text-orbit-glow group-hover:shadow-lg group-hover:shadow-orbit-glow/25 transition-all">
-                                    <Mail size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="text-lg font-bold mb-1">Email Me</h4>
-                                    <p className="text-star-white/60">{personalInfo.email}</p>
-                                </div>
-                            </motion.div>
-                            <motion.div
-                                whileHover={{ x: 10 }}
-                                className="flex items-center gap-6"
-                            >
-                                <div className="w-14 h-14 glass-morphism rounded-full flex items-center justify-center text-orbit-glow">
-                                    <MapPin size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="text-lg font-bold mb-1">Location</h4>
-                                    <p className="text-star-white/60">{personalInfo.location}</p>
-                                </div>
-                            </motion.div>
+                {/* Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+                    <div>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono font-medium mb-3">
+                            <Mail size={13} />
+                            <span>Recruiter & Hiring Inquiries</span>
                         </div>
+                        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-extrabold text-white tracking-tight">
+                            Get In Touch
+                        </h2>
+                    </div>
+                    <p className="text-slate-400 text-sm sm:text-base max-w-xl">
+                        Open for Software Development Engineer (SDE), Backend Engineer, and Full-Stack Engineering roles. Immediate joiner.
+                    </p>
+                </div>
 
-                        {/* Social Links */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                            className="flex gap-4 mt-12"
-                        >
-                            {[
-                                { icon: Github, href: personalInfo.social.github, label: 'GitHub' },
-                                { icon: Linkedin, href: personalInfo.social.linkedin, label: 'LinkedIn' },
-                                { icon: Code2, href: personalInfo.social.leetcode, label: 'LeetCode' },
-                            ].map((social, index) => (
-                                <motion.a
-                                    key={social.label}
-                                    href={social.href}
+                <div className="grid lg:grid-cols-12 gap-12 items-start">
+                    {/* Left Column: Direct Communication Channels (5 cols) */}
+                    <div className="lg:col-span-5 space-y-6">
+                        <div className="p-6 sm:p-8 rounded-2xl bg-slate-900/40 border border-slate-800/80 shadow-xl shadow-black/30 space-y-6">
+                            <div>
+                                <h3 className="text-xl font-display font-bold text-white mb-2">
+                                    Direct Contact Information
+                                </h3>
+                                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                                    Feel free to reach out directly via email, phone, or LinkedIn for technical interview schedules or job openings.
+                                </p>
+                            </div>
+
+                            {/* Email Card */}
+                            <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between gap-4">
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <div className="p-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
+                                        <Mail size={18} />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <span className="text-[11px] font-mono text-slate-400 block">Primary Email</span>
+                                        <a 
+                                            href={`mailto:${personalInfo.email}`}
+                                            className="text-xs sm:text-sm font-semibold text-white hover:text-indigo-300 truncate block transition-colors"
+                                        >
+                                            {personalInfo.email}
+                                        </a>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => handleCopy(personalInfo.email, 'email')}
+                                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors shrink-0"
+                                    title="Copy email"
+                                >
+                                    {copiedEmail ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+                                </button>
+                            </div>
+
+                            {/* Phone Card */}
+                            <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between gap-4">
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <div className="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 shrink-0">
+                                        <Phone size={18} />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <span className="text-[11px] font-mono text-slate-400 block">Direct Phone</span>
+                                        <a 
+                                            href={`tel:${personalInfo.phone}`}
+                                            className="text-xs sm:text-sm font-semibold text-white hover:text-emerald-300 truncate block transition-colors font-mono"
+                                        >
+                                            {personalInfo.phoneDisplay}
+                                        </a>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => handleCopy(personalInfo.phone, 'phone')}
+                                    className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors shrink-0"
+                                    title="Copy phone"
+                                >
+                                    {copiedPhone ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+                                </button>
+                            </div>
+
+                            {/* Location Card */}
+                            <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center gap-3">
+                                <div className="p-2.5 rounded-lg bg-sky-500/10 text-sky-400 shrink-0">
+                                    <MapPin size={18} />
+                                </div>
+                                <div>
+                                    <span className="text-[11px] font-mono text-slate-400 block">Current Location</span>
+                                    <span className="text-xs sm:text-sm font-semibold text-white">
+                                        {personalInfo.location}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Social Profiles */}
+                            <div className="pt-2 flex items-center gap-3">
+                                <a
+                                    href={personalInfo.social.linkedin}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    whileHover={{ scale: 1.1, y: -5 }}
-                                    className="w-12 h-12 glass-morphism rounded-full flex items-center justify-center text-star-white/70 hover:text-white hover:border-orbit-glow/50 hover:shadow-lg hover:shadow-orbit-glow/25 transition-all border border-white/10"
-                                    aria-label={social.label}
+                                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs border border-slate-700 transition-colors"
                                 >
-                                    <social.icon size={20} />
-                                </motion.a>
-                            ))}
-                        </motion.div>
-                    </motion.div>
+                                    <Linkedin size={15} className="text-sky-400" />
+                                    <span>LinkedIn</span>
+                                </a>
 
-                    {/* Contact Form */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="relative"
-                    >
-                        {/* Cosmic Glow Background */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-nebula-purple to-orbit-glow rounded-3xl opacity-20 blur-xl" />
+                                <a
+                                    href={personalInfo.social.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs border border-slate-700 transition-colors"
+                                >
+                                    <Github size={15} />
+                                    <span>GitHub</span>
+                                </a>
+                            </div>
 
-                        <div className="relative glass-morphism p-8 md:p-10 rounded-3xl border border-white/20">
-                            <form className="space-y-6">
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-star-white/80">Name</label>
+                            {/* Download Resume Quick Button */}
+                            <button
+                                onClick={handleDownloadDirect}
+                                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-xl shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50"
+                            >
+                                <Download size={16} />
+                                <span>Download Verified SDE Resume (PDF)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Interactive Recruiter Message Form (7 cols) */}
+                    <div className="lg:col-span-7">
+                        <div className="p-6 sm:p-8 rounded-2xl bg-slate-900/40 border border-slate-800/80 shadow-xl shadow-black/30">
+                            <h3 className="text-xl font-display font-bold text-white mb-2 flex items-center gap-2">
+                                <MessageSquare size={18} className="text-indigo-400" />
+                                <span>Send a Direct Message</span>
+                            </h3>
+                            <p className="text-xs sm:text-sm text-slate-400 mb-6">
+                                Recruiters and engineering hiring managers can leave inquiries below. Messages are routed straight to my inbox.
+                            </p>
+
+                            {formSubmitted ? (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="p-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-3"
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                                        <Check size={24} />
+                                    </div>
+                                    <h4 className="font-display font-bold text-white text-lg">Message Received!</h4>
+                                    <p className="text-xs text-slate-300 max-w-md mx-auto">
+                                        Thank you for reaching out. I prioritize hiring inquiries and will respond within 24 hours.
+                                    </p>
+                                    <button
+                                        onClick={() => setFormSubmitted(false)}
+                                        className="mt-2 px-4 py-2 rounded-lg bg-slate-800 text-xs font-semibold text-slate-200 hover:text-white"
+                                    >
+                                        Send Another Note
+                                    </button>
+                                </motion.div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-4">
+                                    <div className="grid sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-xs font-mono text-slate-400 mb-1.5">
+                                                Your Name / Recruiter Name *
+                                            </label>
+                                            <input
+                                                type="text"
+                                                required
+                                                value={formData.name}
+                                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                                placeholder="e.g., Alex Johnson"
+                                                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-mono text-slate-400 mb-1.5">
+                                                Email Address *
+                                            </label>
+                                            <input
+                                                type="email"
+                                                required
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                placeholder="alex@company.com"
+                                                className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-mono text-slate-400 mb-1.5">
+                                            Company / Opportunity Role
+                                        </label>
                                         <input
                                             type="text"
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-orbit-glow/50 focus:shadow-lg focus:shadow-orbit-glow/25 transition-all"
-                                            placeholder="John Doe"
+                                            value={formData.role}
+                                            onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                                            placeholder="e.g., SDE-1 (Python / Backend) at TechCorp"
+                                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-star-white/80">Email</label>
-                                        <input
-                                            type="email"
-                                            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-orbit-glow/50 focus:shadow-lg focus:shadow-orbit-glow/25 transition-all"
-                                            placeholder="john@example.com"
+
+                                    <div>
+                                        <label className="block text-xs font-mono text-slate-400 mb-1.5">
+                                            Message / Job Description *
+                                        </label>
+                                        <textarea
+                                            rows={4}
+                                            required
+                                            value={formData.message}
+                                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                            placeholder="We reviewed your NoteAI Pro and PayNow projects and would like to discuss an engineering role..."
+                                            className="w-full px-4 py-2.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-600 outline-none focus:border-indigo-500/50 transition-colors resize-none"
                                         />
                                     </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-star-white/80">Subject</label>
-                                    <input
-                                        type="text"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-orbit-glow/50 focus:shadow-lg focus:shadow-orbit-glow/25 transition-all"
-                                        placeholder="Project Inquiry"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-medium text-star-white/80">Message</label>
-                                    <textarea
-                                        rows="4"
-                                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-orbit-glow/50 focus:shadow-lg focus:shadow-orbit-glow/25 transition-all resize-none"
-                                        placeholder="Tell me about your project..."
-                                    />
-                                </div>
-                                <motion.button
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="w-full py-4 bg-gradient-to-r from-nebula-purple to-orbit-glow rounded-xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-orbit-glow/25 transition-all group"
-                                >
-                                    Send Message
-                                    <Send size={20} className="group-hover:translate-x-1 transition-transform" />
-                                </motion.button>
-                            </form>
+
+                                    <button
+                                        type="submit"
+                                        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs shadow-lg shadow-indigo-600/30 transition-all hover:shadow-indigo-600/50"
+                                    >
+                                        <Send size={14} />
+                                        <span>Dispatch Message</span>
+                                    </button>
+                                </form>
+                            )}
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -1,29 +1,46 @@
 export const personalInfo = {
-    name: "Jayanth Mothukuri",
-    title: "Full Stack Developer",
-    quote: "Building the future, one line of code at a time.",
+    fullName: "Mothukuri Siva Naga Jayantha Achary",
+    preferredName: "Jayanth Mothukuri",
+    title: "Software Development Engineer (SDE)",
+    subtitle: "Full-Stack & Backend Systems Architect",
+    status: "Open for SDE Roles • Immediate Availability",
     email: "jayanthmothukuri799@gmail.com",
-    location: "Ongole,Andhra Pradesh,India",
+    phone: "+91-9398764230",
+    phoneDisplay: "+91 93987 64230",
+    location: "Ongole, Andhra Pradesh, India",
+    
+    summary: "Computer Science and Engineering graduate (AI & ML) who builds high-performance web applications and backend services with Python, FastAPI, Django, React.js and SQL databases. Proven track record engineering AI-assisted note workflows, e-commerce ordering engines, and UPI-style transactional wallet systems. Hands-on expertise in REST API architecture, Pydantic validation, SQLAlchemy ORM, PostgreSQL schema design, Postman/Pytest automated testing, Docker containerization, and cloud deployment.",
 
     social: {
-        linkedin: "https://linkedin.com/in/jayanth799",
-        github: "https://jayanth4255.github.io/N4si/",
+        linkedin: "https://linkedin.com/in/jayanth-developer/",
+        github: "https://github.com/jayanth4255",
+        leetcode: "https://leetcode.com",
+        hackerrank: "https://www.hackerrank.com"
     },
 
-    quickFacts: [
-        { label: "Started Coding", value: "2020" },
-        { label: "Favorite Language", value: "Python" },
-        { label: "Chess Rating", value: "1800+" },
-        { label: "Coffee Consumed", value: "∞" }
+    stats: [
+        { label: "DSA Problems Solved", value: "100+", detail: "LeetCode & HackerRank", icon: "Code2" },
+        { label: "Working Full-Stack Apps", value: "3", detail: "FastAPI, Django & React", icon: "Layers" },
+        { label: "REST APIs Engineered", value: "30+", detail: "Validated & Documented", icon: "Globe" },
+        { label: "Academic CGPA", value: "7.73", detail: "B.Tech CSE (AI & ML)", icon: "GraduationCap" }
     ],
 
-    counters: {
-        certifications: 12,
-        leetcodeSolved: 70,
-        projectsBuilt: 5
-    },
-
-    about: `I’m a Full Stack Developer who loves building things that live on the web. My interest in web development started back in 2022 when I decided to try editing custom Tumblr themes — turns out hacking together HTML & CSS is pretty fun In an HACKATHON in my college.!
-
-    Fast-forward to today, and I’ve had the privilege of building software for various clients and personal projects. My main focus these days is building accessible, inclusive products and digital experiences. I enjoy the constant change in the tech industry and the challenge of keeping up with it. When I'm not at the computer, I'm usually hanging out with my friends, playing chess, or just enjoying some good music.`
+    engineeringStrengths: [
+        {
+            title: "Scalable Backend Architecture",
+            description: "Designing RESTful APIs with FastAPI and Django REST Framework, incorporating strict request validation schemas, centralized exception handlers, and structured HTTP error standards."
+        },
+        {
+            title: "Database Design & Concurrency Safety",
+            description: "Architecting relational schemas in PostgreSQL and SQLite, managing complex foreign-key relationships, and enforcing transaction atomicity to prevent race conditions."
+        },
+        {
+            title: "Modern Interactive Frontends",
+            description: "Crafting fluid, responsive user interfaces in React.js with modular component architectures, optimized state management, and modern CSS/Tailwind design systems."
+        },
+        {
+            title: "Test-Driven Quality & Reliability",
+            description: "Writing and automating unit, integration, and API test suites with Pytest and Postman to ensure deterministic endpoint behaviors across edge-case scenarios."
+        }
+    ]
 };
